@@ -1,14 +1,50 @@
+import {thunk} from 'redux-thunk';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter} from 'react-router-dom';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux'; 
+import {composeWithDevTools} from 'redux-devtools-extension';
+import rootReducer from './redux/reducer/rootReducer' ;
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
+ // puts in brackets
+import { reduxFirestore, getFirestore } from 'redux-firestore';
+import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase';
+import { createFirestoreInstance } from 'redux-firestore';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBR1MwPSNpy4O-7TMkdwKgKyaut6oUaUbk",
+  authDomain: "resume-f67b1.firebaseapp.com",
+  projectId: "resume-f67b1",
+  storageBucket: "resume-f67b1.appspot.com",
+  messagingSenderId: "297865256203",
+  appId: "1:297865256203:web:a28ea6fdf066254ca9960e"
+};
+
+firebase.initializeApp(firebaseConfig);
+firebase.firestore();
+
+const reduxStore = createStore(rootReducer,composeWithDevTools(applyMiddleware(thunk.withExtraArgument({getFirebase,getFirestore})),reduxFirestore(firebase)))
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+    <BrowserRouter>
+    <Provider store ={reduxStore}>
+    <ReactReduxFirebaseProvider
+    firebase={firebase}
+    config={firebaseConfig}
+    dispatch={reduxStore.dispatch}
+    createFirestoreInstance={createFirestoreInstance}>
     <App />
-  </React.StrictMode>
+  </ReactReduxFirebaseProvider>
+    </Provider>
+    </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
