@@ -3,7 +3,7 @@
         "id": null,
         "skincd":""
     },
-    "contacts": null,
+    "contacts":[],
     "education": null,
     "auth":{
         "ErrorMessage":"",

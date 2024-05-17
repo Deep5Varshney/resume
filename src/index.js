@@ -1,14 +1,17 @@
-import {thunk} from 'redux-thunk';
+//import thunk from 'redux-thunk';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, combineReducers } from 'redux';
 import {Provider} from 'react-redux'; 
 import {composeWithDevTools} from 'redux-devtools-extension';
 import rootReducer from './redux/reducer/rootReducer' ;
+import contactReducer from './redux/reducer/contactReducer';
+import initialState from './redux/reducer/intialState.json';
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
@@ -29,22 +32,45 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.firestore();
 
-const reduxStore = createStore(rootReducer,composeWithDevTools(applyMiddleware(thunk.withExtraArgument({getFirebase,getFirestore})),reduxFirestore(firebase)))
 
+
+function createThunkMiddleware(extraArgument) {
+  return ({ dispatch, getState }) => next => action => {
+    if (typeof action === 'function') {
+      return action(dispatch, getState, extraArgument);
+    }
+
+    return next(action);
+  };
+}
+
+const thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+export default thunk;
+
+const reduxStore = createStore(
+  rootReducer, initialState,
+  composeWithDevTools(
+    applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
+    reduxFirestore(firebase)
+  )
+);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BrowserRouter>
-    <Provider store ={reduxStore}>
-    <ReactReduxFirebaseProvider
+  <Provider store={reduxStore}>
+  <ReactReduxFirebaseProvider
     firebase={firebase}
     config={firebaseConfig}
     dispatch={reduxStore.dispatch}
-    createFirestoreInstance={createFirestoreInstance}>
-    <App />
-  </ReactReduxFirebaseProvider>
-    </Provider>
+    createFirestoreInstance={createFirestoreInstance}
+  >
+    <BrowserRouter>
+      <App />
     </BrowserRouter>
+  </ReactReduxFirebaseProvider>
+</Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

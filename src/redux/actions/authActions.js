@@ -1,6 +1,12 @@
 
 import * as authActions from './actions';
 
+const initialState = {
+    contacts: [], // An array to hold contact objects
+    loading: false, // Indicates whether contacts are being fetched
+    error: null // Holds any error that occurs during contact operations
+  };
+
 const registerReq = () => {
     return{
         type : authActions.REGISTER_REQUEST,
@@ -96,3 +102,4 @@ export const  signout = () => {
         })
     }
 }
+

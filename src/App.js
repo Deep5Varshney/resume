@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Importing BrowserRouter, Routes, and Route
-
-import './static/scss/scss.zip';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Importing BrowserRouter, Routes, and Route 
+// write Router if not used
+import './static/scss/app.scss';
 
 import Header from './Components/header';
 import Footer from './Components/footer';
@@ -17,7 +17,7 @@ import Finalize from  './Components/pageFinalize';
 
 function App() {
   return (
-    <Router> {/* Wrap your routes in a Router component */}
+   
       <div>
         <Header />
         <Routes>
@@ -33,7 +33,6 @@ function App() {
         </Routes>
         <Footer />
       </div>
-    </Router>
   );
 }
 
