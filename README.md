@@ -76,8 +76,7 @@ UI of the "Resume Builder" application
 ![Screenshot 2024-05-25 020501](https://github.com/Deep5Varshney/resume/assets/137312194/cf420877-a911-4fa0-acea-61d2cc130a36)
 
 
-UI of the "Resume template" -
-![Screenshot 2024-05-25 020520](https://github.com/Deep5Varshney/resume/assets/137312194/3f68aed7-6517-4bb8-becc-08fdf424e146)
+UI of the "Resume template"
 ![Screenshot 2024-05-25 020538](https://github.com/Deep5Varshney/resume/assets/137312194/b0621290-8e57-4cea-aab7-f5121c16afde)
 ![Screenshot 2024-05-25 020556](https://github.com/Deep5Varshney/resume/assets/137312194/119801d1-bbdb-4f83-9ec7-2a66b1c35f0c)
 ![Screenshot 2024-05-25 020614](https://github.com/Deep5Varshney/resume/assets/137312194/23d76854-07ba-443c-bfe9-050cb7f26a40)
